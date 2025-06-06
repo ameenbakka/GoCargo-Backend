@@ -1,0 +1,6 @@
+@GoCargo_HostAddress = http://localhost:5075
+
+GET {{GoCargo_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
