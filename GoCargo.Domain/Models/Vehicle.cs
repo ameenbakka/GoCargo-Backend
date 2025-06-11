@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,9 @@ namespace Domain.Models
         public decimal Capacity { get; set; }
         public bool IsAvailable { get; set; } = true;
         public string? Image { get; set; }
+        [Required(ErrorMessage = "Location is required")]
+        public string? Location { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public virtual User? User { get; set; }
     }
 }

@@ -17,6 +17,8 @@ using Microsoft.Data.SqlClient;
 using Application.Services.VehicleService;
 using Infrastructure.Repository;
 using Application.Services.CloudinaryService;
+using GoCargo.Application.Interfaces.ServiceInterfaces;
+using GoCargo.Application.Services.BookingService;
 namespace GoCargo
 {
     public class Program
@@ -33,6 +35,7 @@ namespace GoCargo
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<IVehicleService, VehicleService>();
             builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
+            builder.Services.AddScoped<IBookingService, BookingService>();
 
 
             builder.Services.AddHttpContextAccessor();

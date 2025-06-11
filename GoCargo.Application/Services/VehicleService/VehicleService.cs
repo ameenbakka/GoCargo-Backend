@@ -39,6 +39,7 @@ namespace Application.Services.VehicleService
                 VehicleNumber = dto.VehicleNumber,
                 VehicleType = dto.VehicleType,
                 Capacity = dto.Capacity,
+                Location = dto.Location,
                 Image = imageUrl
             };
 
@@ -60,6 +61,7 @@ namespace Application.Services.VehicleService
             existingVehicle.VehicleType = dto.VehicleType;
             existingVehicle.Capacity = dto.Capacity;
             existingVehicle.Image = imageUrl;
+            existingVehicle.Location = dto.Location;
 
             await _repository.UpdateAsync(existingVehicle);
         }

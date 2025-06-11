@@ -18,5 +18,7 @@ namespace Application.Dto.VehicleDto
         public string? VehicleType { get; set; }
         [Column(TypeName = "decimal(5,2)")]
         public decimal Capacity { get; set; }
+        [Required(ErrorMessage = "Location is required")]
+        public string? Location { get; set; }
     }
 }

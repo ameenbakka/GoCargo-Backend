@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Interfaces.RepositroryInterfaces;
+using Domain.Models;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,7 +26,7 @@ namespace Infrastructure.Repository
             try
             {
                 await _dbSet.AddAsync(Entity);
-                await _dbContext.SaveChangesAsync();    
+                await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
