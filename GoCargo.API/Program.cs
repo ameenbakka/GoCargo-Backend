@@ -19,6 +19,8 @@ using Infrastructure.Repository;
 using Application.Services.CloudinaryService;
 using GoCargo.Application.Interfaces.ServiceInterfaces;
 using GoCargo.Application.Services.BookingService;
+using GoCargo.Application.Interfaces.RepositroryInterfaces;
+using GoCargo.Infrastructure.Repository.VehicleRepository;
 namespace GoCargo
 {
     public class Program
@@ -36,6 +38,8 @@ namespace GoCargo
             builder.Services.AddScoped<IVehicleService, VehicleService>();
             builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
             builder.Services.AddScoped<IBookingService, BookingService>();
+            builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+
 
 
             builder.Services.AddHttpContextAccessor();

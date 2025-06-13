@@ -13,6 +13,7 @@ namespace Application.Interfaces.RepositroryInterfaces
         Task<T> GetByIdAsync(int id);
         Task UpdateAsync(T entity);
         Task DeleteAsync(int id);
+        Task<IEnumerable<T>> GetAllByUserIdAsync(int userId);
 
     }
 }

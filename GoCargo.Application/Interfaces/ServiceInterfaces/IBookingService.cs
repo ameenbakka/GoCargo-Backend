@@ -13,7 +13,7 @@ namespace GoCargo.Application.Interfaces.ServiceInterfaces
     public interface IBookingService
     {
         Task AddBookingAsync(int userId, CreateBookingDto dto);
-        Task<Booking> GetAllBookingAsync(int userId);
+        Task<IEnumerable<Booking>> GetAllBookingAsync(int userId);
         Task UpdateBookingAsync(int id, CreateBookingDto dto);
         Task DeleteBookingAsync(int id);
 

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Dto.VehicleDto;
 using Domain.Models;
+using GoCargo.Application.Dto.VehicleDto;
 using Microsoft.AspNetCore.Http;
 
 namespace Application.Interfaces.ServiceInterfaces
@@ -16,6 +17,7 @@ namespace Application.Interfaces.ServiceInterfaces
             Task<Vehicle> GetAllVehiclesAsync(int id);
             Task UpdateVehicleAsync(int id , CreateVehicleDto dto, IFormFile image);
             Task DeleteVehicleAsync(int id);
+        Task UpdateAvailability(int userId, UpdateAvailableDto dto);
         }
 
     }

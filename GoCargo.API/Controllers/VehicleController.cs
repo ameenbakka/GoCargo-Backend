@@ -5,6 +5,7 @@ using Application.Dto.VehicleDto;
 using Application.Interfaces.ServiceInterfaces;
 using Application.Services.ProfileService;
 using Domain.Models;
+using GoCargo.Application.Dto.VehicleDto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -78,6 +79,22 @@ namespace GoCargo.Controllers
             {
                 await _vehicleService.DeleteVehicleAsync(id);
                 return Ok(new ApiResponse<string>(null,"Vehicle deleted successfully", true));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse<string>(default, ex.Message, false));
+            }
+        }
+        // Update vehicle availability
+        [HttpPut("Update Availability/Driver")]
+        [Authorize(Roles = "Driver")]
+        public async Task<IActionResult> UpdateVehicle(UpdateAvailableDto dto)
+        {
+            try
+            {
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                await _vehicleService.UpdateAvailability(userId, dto);
+                return Ok(new ApiResponse<string>(null, "Availability updated successfully", true));
             }
             catch (Exception ex)
             {

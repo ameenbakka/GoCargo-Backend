@@ -43,7 +43,7 @@ namespace GoCargo.API.Controllers
             try
             {
                 await _bookingService.UpdateBookingAsync(id, dto);
-                return Ok(new ApiResponse<CreateBookingDto>(dto, "Vehicle updated successfully", true));
+                return Ok(new ApiResponse<CreateBookingDto>(dto, "Booking updated successfully", true));
             }
             catch (Exception ex)
             {
@@ -58,12 +58,31 @@ namespace GoCargo.API.Controllers
             try
             {
                 await _bookingService.DeleteBookingAsync(id);
-                return Ok(new ApiResponse<string>(null, "Vehicle deleted successfully", true));
+                return Ok(new ApiResponse<string>(null, "Booking deleted successfully", true));
             }
             catch (Exception ex)
             {
                 return BadRequest(new ApiResponse<string>(default, ex.Message, false));
             }
+        }
+        [HttpGet("Bookings/Driver")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> GetAllByUserId()
+        {
+            try
+            {
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                var bookings = await _bookingService.GetAllBookingAsync(userId);
+                return Ok(new ApiResponse<IEnumerable<Booking>>(bookings, "Booking fetched successfully", true));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse<string>(default, "No Booking available", false)
+                {
+
+                });
+            }
+
         }
 
 

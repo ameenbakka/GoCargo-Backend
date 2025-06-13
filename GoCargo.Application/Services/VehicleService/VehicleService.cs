@@ -9,6 +9,8 @@ using Application.Interfaces.ServiceInterfaces;
 using Application.Services.CloudinaryService;
 using AutoMapper;
 using Domain.Models;
+using GoCargo.Application.Dto.VehicleDto;
+using GoCargo.Application.Interfaces.RepositroryInterfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using static System.Net.Mime.MediaTypeNames;
@@ -21,13 +23,15 @@ namespace Application.Services.VehicleService
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly ICloudinaryService _cloudinaryService;
+        private readonly IVehicleRepository _vehicleRepository;
 
-        public VehicleService(IRepository<Vehicle> repository, IConfiguration configuration, IMapper mapper, ICloudinaryService cloudinaryService)
+        public VehicleService(IRepository<Vehicle> repository, IConfiguration configuration, IMapper mapper, ICloudinaryService cloudinaryService,IVehicleRepository vehicleRepository)
         {
             _repository = repository;
             _configuration = configuration;
             _mapper = mapper;
             _cloudinaryService = cloudinaryService;
+            _vehicleRepository = vehicleRepository;
 
         }
         public async Task AddVehicleAsync(int userId, CreateVehicleDto dto, IFormFile image)
@@ -70,5 +74,12 @@ namespace Application.Services.VehicleService
         {
             await _repository.DeleteAsync(id);
         }
+        public async Task UpdateAvailability(int userId, UpdateAvailableDto dto)
+        {
+            var existingVehicle = await _vehicleRepository.GetVehicleAsync(userId);
+            existingVehicle.IsAvailable = dto.IsAvailable;
+            await _repository.UpdateAsync(existingVehicle);
+        }
+
     }
 }

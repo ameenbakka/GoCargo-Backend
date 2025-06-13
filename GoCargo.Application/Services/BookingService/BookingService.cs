@@ -36,9 +36,9 @@ namespace GoCargo.Application.Services.BookingService
 
             await _repository.AddAsync(booking);
         }
-        public async Task<Booking> GetAllBookingAsync(int userId)
+        public async Task<IEnumerable<Booking>> GetAllBookingAsync(int userId)
         {
-            return await _repository.GetByIdAsync(userId);
+            return await _repository.GetAllByUserIdAsync(userId);
         }
 
         public async Task UpdateBookingAsync(int id, CreateBookingDto dto)

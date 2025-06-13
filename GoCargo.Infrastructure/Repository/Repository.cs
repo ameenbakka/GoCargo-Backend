@@ -82,5 +82,19 @@ namespace Infrastructure.Repository
                 throw new Exception($"Error deleting entity with ID {id}", ex);
             }
         }
+        public async Task<IEnumerable<T>> GetAllByUserIdAsync(int userId)
+        {
+            try
+            {
+                return await _dbSet
+                    .Where(e => EF.Property<int>(e, "UserId") == userId)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error retrieving entities for UserId {userId}", ex);
+            }
+        }
+
     }
 }
