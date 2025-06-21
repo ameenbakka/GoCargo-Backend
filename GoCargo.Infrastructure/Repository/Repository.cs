@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Interfaces.RepositroryInterfaces;
@@ -93,6 +94,17 @@ namespace Infrastructure.Repository
             catch (Exception ex)
             {
                 throw new Exception($"Error retrieving entities for UserId {userId}", ex);
+            }
+        }
+        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+        {
+            try
+            {
+                return await _dbSet.Where(predicate).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error querying entities", ex);
             }
         }
 

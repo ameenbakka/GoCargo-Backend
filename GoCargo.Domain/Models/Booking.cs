@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GoCargo.Domain.Models;
 
 namespace Domain.Models
 {
@@ -22,6 +23,7 @@ namespace Domain.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public virtual User? User { get; set; }
+        public virtual DriverAssignment? DriverAssignment { get; set; }
 
     }
 }

@@ -8,8 +8,11 @@ using Application.Dto;
 using Application.Dto.VehicleDto;
 using AutoMapper;
 using Domain.Models;
+using GoCargo.Application.Dto.AssingmentDto;
 using GoCargo.Application.Dto.BookingDto;
+using GoCargo.Application.Dto.DriverRequestDto;
 using GoCargo.Application.Dto.VehicleDto;
+using GoCargo.Domain.Models;
 
 namespace Application.Mapper
 {
@@ -25,6 +28,12 @@ namespace Application.Mapper
             CreateMap<GetVehicleDto, Vehicle>().ReverseMap();
             CreateMap<UpdateAvailableDto, Vehicle>().ReverseMap();
             CreateMap<CreateBookingDto, Booking>().ReverseMap();
+            CreateMap<AssignDriverDto, DriverAssignment>().ReverseMap();
+            CreateMap<UpdateDeliveryStatusDto, DriverAssignment>().ReverseMap();
+            CreateMap<CreateDriverRequestDto, DriverRequest>().ReverseMap();
+
+
+
 
 
 

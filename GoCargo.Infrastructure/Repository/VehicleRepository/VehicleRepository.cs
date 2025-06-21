@@ -28,5 +28,20 @@ namespace GoCargo.Infrastructure.Repository.VehicleRepository
             _context.vehicles.Update(vehicle);
             await _context.SaveChangesAsync();
         }
+        public async Task<IEnumerable<Booking>> GetAllWithUserAsync()
+        {
+            return await _context.bookings
+                .Include(b => b.User) 
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<Vehicle>> GetAllVehiclesAsync()
+        {
+            return await _context.vehicles
+            .Include(v => v.User) 
+            .ToListAsync();
+        }
+
+
+
     }
 }

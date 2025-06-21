@@ -5,6 +5,7 @@ using Application.Dto.VehicleDto;
 using Application.Interfaces.ServiceInterfaces;
 using Application.Services.ProfileService;
 using Domain.Models;
+using GoCargo.Application.Dto.AssingmentDto;
 using GoCargo.Application.Dto.VehicleDto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -101,5 +102,79 @@ namespace GoCargo.Controllers
                 return BadRequest(new ApiResponse<string>(default, ex.Message, false));
             }
         }
+        //Update Delivery Status
+        [HttpPost("update status/Driver")]
+        [Authorize(Roles = "Driver")]
+        public async Task<IActionResult> UpdateDeliveryStatus([FromBody] UpdateDeliveryStatusDto dto)
+        {
+            try
+            {
+                var updated = await _vehicleService.UpdateDeliveryStatusAsync(dto.BookingId, dto.Status);
+                return Ok(new ApiResponse<Booking>(updated, "Booking status updated successfully", true));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse<string>(null, "Failed to update booking status", false));
+            }
+        }
+        //Get All Assigned bookings
+        [HttpGet("Assigned-bookings/Driver")]
+        [Authorize(Roles = "Driver")]
+        public async Task<IActionResult> GetDriverBookings()
+        {
+            try
+            {
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                var bookings = await _vehicleService.GetBookingsByDriverIdAsync(userId);
+                return Ok(new ApiResponse<IEnumerable<DriverBookingDetailsDto>>(bookings, "Assigned bookings fetched successfully", true));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse<string>(null, "Failed to fetch driver bookings", false));
+            }
+        }
+        [HttpGet("Nearby-bookings/Driver")]
+        [Authorize(Roles = "Driver")]
+        public async Task<IActionResult> GetNearbyBookings()
+        {
+            try
+            {
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                // Service call – returns your flattened DTO collection
+                var bookings = await _vehicleService.GetNearbyBookingsAsync(userId);
+
+                return Ok(new ApiResponse<IEnumerable<DriverBookingDto>>(
+                    bookings,
+                    "Nearby bookings fetched successfully",
+                    true
+                ));
+            }
+            catch (Exception)
+            {
+                return BadRequest(new ApiResponse<string>(
+                    null,
+                    "Failed to fetch nearby bookings",
+                    false
+                ));
+            }
+        }
+        //Accept nearby Bookings
+        [HttpPost("Accept-booking/Driver")]
+        [Authorize(Roles = "Driver")]
+        public async Task<IActionResult> AcceptBooking([FromBody] UpdateDeliveryStatusDto dto)
+        {
+            try
+            {
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                var updated = await _vehicleService.AcceptDeliveryAsync(dto.BookingId, dto.Status,userId);
+                return Ok(new ApiResponse<DriverBookingDetailsDto>(updated, "Booking Accepted successfully", true));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse<string>(null, "Failed to Accept bookings", false));
+            }
+        }
+
     }
 }

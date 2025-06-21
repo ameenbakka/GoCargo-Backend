@@ -21,6 +21,8 @@ using GoCargo.Application.Interfaces.ServiceInterfaces;
 using GoCargo.Application.Services.BookingService;
 using GoCargo.Application.Interfaces.RepositroryInterfaces;
 using GoCargo.Infrastructure.Repository.VehicleRepository;
+using GoCargo.Application.Services.AdminService;
+using GoCargo.Application.Services.DriverRequestService;
 namespace GoCargo
 {
     public class Program
@@ -39,6 +41,8 @@ namespace GoCargo
             builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
             builder.Services.AddScoped<IBookingService, BookingService>();
             builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+            builder.Services.AddScoped<IAdminService, AdminService>();
+            builder.Services.AddScoped<IDriverRequestService, DriverRequestService>();
 
 
 
@@ -109,12 +113,13 @@ namespace GoCargo
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

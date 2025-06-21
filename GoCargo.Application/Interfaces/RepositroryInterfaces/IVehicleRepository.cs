@@ -11,6 +11,8 @@ namespace GoCargo.Application.Interfaces.RepositroryInterfaces
     {
         Task<Vehicle> GetVehicleAsync(int userId);
         Task UpdateAsync(Vehicle vehicle);
+        Task<IEnumerable<Booking>> GetAllWithUserAsync();
+        Task<IEnumerable<Vehicle>> GetAllVehiclesAsync();
 
     }
 }

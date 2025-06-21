@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Domain.Models;
+using GoCargo.Domain.Models;
 
 namespace Infrastructure.Context
 {
@@ -14,6 +15,8 @@ namespace Infrastructure.Context
         public DbSet<User> users { get; set; }
         public DbSet<Booking> bookings { get; set; }
         public DbSet<Vehicle> vehicles { get; set; }
+        public DbSet<DriverAssignment> driverAssignments { get; set; }
+        public DbSet<DriverRequest> driverRequests { get; set; }
 
 
 
@@ -36,6 +39,25 @@ namespace Infrastructure.Context
              .HasMany(x => x.Vehicles)
              .WithOne(r => r.User)
              .HasForeignKey(x => x.DriverId);
+            modelBuilder.Entity<DriverRequest>()
+                .HasOne(dr => dr.User)
+                .WithOne(u => u.DriverRequest)
+                .HasForeignKey<DriverRequest>(dr => dr.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<DriverAssignment>(entity =>
+            {
+                entity.HasOne(da => da.Booking)
+                .WithOne(b => b.DriverAssignment)
+                .HasForeignKey<DriverAssignment>(da => da.BookingId)
+                .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(da => da.User)
+                 .WithMany(d => d.DriverAssignments)
+                 .HasForeignKey(da => da.DriverId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+            modelBuilder.Entity<DriverAssignment>()
+               .HasKey(da => da.AssignmentId);
         }
     }
 }

@@ -65,7 +65,8 @@ namespace GoCargo.API.Controllers
                 return BadRequest(new ApiResponse<string>(default, ex.Message, false));
             }
         }
-        [HttpGet("Bookings/Driver")]
+        //Get bookings
+        [HttpGet("Bookings/User")]
         [Authorize(Roles = "User")]
         public async Task<IActionResult> GetAllByUserId()
         {
