@@ -6,6 +6,7 @@ using Application.Interfaces.ServiceInterfaces;
 using Application.Services.ProfileService;
 using Domain.Models;
 using GoCargo.Application.Dto.AssingmentDto;
+using GoCargo.Application.Dto.BookingDto;
 using GoCargo.Application.Dto.VehicleDto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -110,7 +111,7 @@ namespace GoCargo.Controllers
             try
             {
                 var updated = await _vehicleService.UpdateDeliveryStatusAsync(dto.BookingId, dto.Status);
-                return Ok(new ApiResponse<Booking>(updated, "Booking status updated successfully", true));
+                return Ok(new ApiResponse<BookingStatusDto>(updated, "Booking status updated successfully", true));
             }
             catch (Exception ex)
             {

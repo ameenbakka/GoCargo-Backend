@@ -17,6 +17,7 @@ namespace Infrastructure.Context
         public DbSet<Vehicle> vehicles { get; set; }
         public DbSet<DriverAssignment> driverAssignments { get; set; }
         public DbSet<DriverRequest> driverRequests { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
 
 

@@ -9,6 +9,7 @@ using Application.Interfaces.ServiceInterfaces;
 using Application.Services.CloudinaryService;
 using AutoMapper;
 using Domain.Models;
+using GoCargo.Application.Dto.BookingDto;
 using GoCargo.Application.Dto.VehicleDto;
 using GoCargo.Application.Interfaces.RepositroryInterfaces;
 using GoCargo.Domain.Models;
@@ -85,7 +86,7 @@ namespace Application.Services.VehicleService
             existingVehicle.IsAvailable = dto.IsAvailable;
             await _repository.UpdateAsync(existingVehicle);
         }
-        public async Task<Booking> UpdateDeliveryStatusAsync(int bookingId, string status)
+        public async Task<BookingStatusDto> UpdateDeliveryStatusAsync(int bookingId, string status)
         {
             // Step 1: Get booking
             var booking = await _bookingrepo.GetByIdAsync(bookingId);
@@ -107,7 +108,11 @@ namespace Application.Services.VehicleService
                 await _assirepo.UpdateAsync(assignmentToUpdate);
             }
 
-            return booking;
+            return new BookingStatusDto
+            {
+                BookingId = booking.BookingId,
+                Status= booking.BookingStatus
+            };
         }
         public async Task<IEnumerable<DriverBookingDetailsDto>> GetBookingsByDriverIdAsync(int driverId)
         {
